@@ -48,7 +48,7 @@ public class CookieManager : MonoBehaviour
     {
         cookiesPerClick = cookiesPerClick += cookiesPerSecond; //Tried to make total cookies equal cookies per click and cookies per second.
         cookies += cookiesPerClick;
-
+        Debug.Log("cookie Added");
         UpdateCookieText();
         UpdateClickerUpgradeText();
         //UpdateBackerOneUpgradeText();
@@ -61,7 +61,7 @@ public class CookieManager : MonoBehaviour
     {
         if (cookies >= costToUpgrade1)
         {
-           
+            Debug.Log("Cookies Per click Added");
             cookies -= costToUpgrade1;
             cookiesPerClick += 1; //make it add an extra cookie per click after each upgrade e.g +2, +3, +4...
             UpdateCookieText();
@@ -75,14 +75,28 @@ public class CookieManager : MonoBehaviour
     {
         if (cookies >= costToUpgrade2)
         {
-
+            Debug.Log("Upgrade 1 Bought");
             cookies -= costToUpgrade2;
             cookiesPerSecond += 0.1f; //Tried to make it add 0.1 cookie per second (Not Sure)
+            cookies += cookiesPerSecond;
             costToUpgrade2 = costToUpgrade2 * upgradeMultiplayer;
             upgradeMultiplayer -= 0.002f; //Cost of price multiplyer slowly decreases as time goes on
             UpdateCookieText();
             UpdateBackerOneUpgradeText();
 
+        }
+    }
+
+    private float time;
+    private void Update()
+    {
+        time += Time.deltaTime;
+
+        if(time >= 1)
+        {
+            UpdateBackerOneUpgrade();
+
+            time = 0;
         }
     }
 
@@ -144,7 +158,7 @@ public class CookieManager : MonoBehaviour
         else
         {
             upgradeButton1.GetComponent<UnityEngine.UI.Image>().color = Color.red; // if has not enough cookies button turns red
-            upgradeButton1.interactable = false; // // if has not enough cookies you can't click the button 
+            upgradeButton1.interactable = true; // // if has not enough cookies you can't click the button 
         }
     }
 
