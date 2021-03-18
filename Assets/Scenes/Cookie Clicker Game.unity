@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 24630088}
   - component: {fileID: 24630087}
   m_Layer: 5
-  m_Name: Upgrade 1
+  m_Name: Cookie PerClick Upgrade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1473,6 +1473,7 @@ MonoBehaviour:
   upgradeButton1: {fileID: 396795687}
   upgradeButton2: {fileID: 830242993}
   upgradeButton3: {fileID: 613791221}
+  autoClickerUpgradeIsBought: 0
 --- !u!4 &1002897912
 Transform:
   m_ObjectHideFlags: 0
@@ -1499,7 +1500,7 @@ GameObject:
   - component: {fileID: 1770388224}
   - component: {fileID: 1770388223}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: cookies overtime upgrade text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1733,7 +1734,7 @@ GameObject:
   - component: {fileID: 1861398590}
   - component: {fileID: 1861398589}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Cookie per click upgrade text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

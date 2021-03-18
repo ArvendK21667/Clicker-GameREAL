@@ -28,6 +28,7 @@ public class CookieManager : MonoBehaviour
     private float costToUpgrade3 = 200f; //Cost for Second AutoCookie Maker
     private float costToUpgrade4 = 1500f; //Cost for Third AutoCookie Maker
     private object imagecolor;
+    public bool autoClickerUpgradeIsBought = false;
     
     private int clickerUpgradeMultiplayer = 3; //Multiplyer for the Clicker
 
@@ -46,7 +47,7 @@ public class CookieManager : MonoBehaviour
 
     public void AddCookie()
     {
-        cookiesPerClick = cookiesPerClick += cookiesPerSecond; //Tried to make total cookies equal cookies per click and cookies per second.
+        //cookiesPerClick += cookiesPerSecond; //Tried to make total cookies equal cookies per click and cookies per second.
         cookies += cookiesPerClick;
         Debug.Log("cookie Added");
         UpdateCookieText();
@@ -77,14 +78,31 @@ public class CookieManager : MonoBehaviour
         {
             Debug.Log("Upgrade 1 Bought");
             cookies -= costToUpgrade2;
-            cookiesPerSecond += 0.1f; //Tried to make it add 0.1 cookie per second (Not Sure)
-            cookies += cookiesPerSecond;
+            cookiesPerSecond += 1f; //Tried to make it add 0.1 cookie per second (Not Sure)
+          //  cookies += cookiesPerSecond * time;
             costToUpgrade2 = costToUpgrade2 * upgradeMultiplayer;
             upgradeMultiplayer -= 0.002f; //Cost of price multiplyer slowly decreases as time goes on
             UpdateCookieText();
             UpdateBackerOneUpgradeText();
+            autoClickerUpgradeIsBought = true;
+
 
         }
+
+    }
+
+    public void AddCookiesPerSecond()
+    {
+
+        cookies += cookiesPerSecond;
+
+
+        UpdateCookieText();
+
+
+
+
+
     }
 
     private float time;
@@ -94,7 +112,7 @@ public class CookieManager : MonoBehaviour
 
         if(time >= 1)
         {
-            UpdateBackerOneUpgrade();
+            AddCookiesPerSecond();
 
             time = 0;
         }
@@ -148,7 +166,7 @@ public class CookieManager : MonoBehaviour
 
     public void UpdateBackerOneUpgradeText()
     {
-        ClickerUpgradeText.text = " Slow Baker    Cost: " + (int)costToUpgrade2;
+        BackerOneUpgradeText.text = " Slow Baker    Cost: " + (int)costToUpgrade2;
 
         if (cookies >= costToUpgrade2)
         {
@@ -164,7 +182,7 @@ public class CookieManager : MonoBehaviour
 
     public void UpdateBackerTwoUpgradeText()
     {
-        ClickerUpgradeText.text = " Medium Baker    Cost: " + (int)costToUpgrade3;
+        BackerTwoUpgradeText.text = " Medium Baker    Cost: " + (int)costToUpgrade3;
 
         if (cookies >= costToUpgrade3)
         {
@@ -180,7 +198,7 @@ public class CookieManager : MonoBehaviour
 
     public void UpdateBackerThreeUpgradeText()
     {
-        ClickerUpgradeText.text = " Fast Baker    Cost: " + (int)costToUpgrade4;
+        BackerThreeUpgradeText.text = " Fast Baker    Cost: " + (int)costToUpgrade4;
 
         if (cookies >= costToUpgrade4)
         {
