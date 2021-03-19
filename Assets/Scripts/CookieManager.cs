@@ -16,31 +16,39 @@ public class CookieManager : MonoBehaviour
     [SerializeField] private TMP_Text BackerOneUpgradeText;
     [SerializeField] private TMP_Text BackerTwoUpgradeText;
     [SerializeField] private TMP_Text BackerThreeUpgradeText;
+    [SerializeField] private TMP_Text MachineOneUpgradeText;
+    [SerializeField] private TMP_Text MachineTwoUpgradeText;
+    [SerializeField] private TMP_Text CookiesPSText;
     [SerializeField] private Button clickerupgradeButton;
     [SerializeField] private Button upgradeButton1;
     [SerializeField] private Button upgradeButton2;
     [SerializeField] private Button upgradeButton3;
+    [SerializeField] private Button upgradeButton4;
+    [SerializeField] private Button upgradeButton5;
     [Range(1f, 4f)]
-    private float upgradeMultiplayer = 1.6f; //Multiplyer for the Autoclicker
+    private float upgradeMultiplayer = 1.25f; //Multiplyer for the Autoclicker
    
     private float costToUpgrade1 = 500f; //Cost for First Clicker upgrade
     private float costToUpgrade2 = 25f; //Cost for First AutoCookie Maker
     private float costToUpgrade3 = 200f; //Cost for Second AutoCookie Maker
     private float costToUpgrade4 = 1500f; //Cost for Third AutoCookie Maker
+    private float costToUpgrade5 = 8500f; //Cost for Fourth AutoCookie Maker
+    private float costToUpgrade6 = 25000f; //Cost for Fifth AutoCookie Maker
     private object imagecolor;
     public bool autoClickerUpgradeIsBought = false;
     
-    private int clickerUpgradeMultiplayer = 3; //Multiplyer for the Clicker
+    private int clickerUpgradeMultiplayer = 2; //Multiplyer for the Clicker
 
     public void Start()
     {
-
         UpdateCookieText();
         UpdateClickerUpgradeText();
         UpdateBackerOneUpgradeText();
         UpdateBackerTwoUpgradeText();
         UpdateBackerThreeUpgradeText();
-
+        UpdateMachineOneUpgradeText();
+        UpdateMachineTwoUpgradeText();
+        UpdateCookiesPSText();
         // To Update to buttons on start to disabled them and make them red until number of cookies have been reached.
     }
 
@@ -49,7 +57,6 @@ public class CookieManager : MonoBehaviour
     {
         //cookiesPerClick += cookiesPerSecond; //Tried to make total cookies equal cookies per click and cookies per second.
         cookies += cookiesPerClick;
-        Debug.Log("cookie Added");
         UpdateCookieText();
         UpdateClickerUpgradeText();
         //UpdateBackerOneUpgradeText();
@@ -62,9 +69,9 @@ public class CookieManager : MonoBehaviour
     {
         if (cookies >= costToUpgrade1)
         {
-            Debug.Log("Cookies Per click Added");
             cookies -= costToUpgrade1;
             cookiesPerClick += 1; //make it add an extra cookie per click after each upgrade e.g +2, +3, +4...
+            costToUpgrade1 = costToUpgrade1 * clickerUpgradeMultiplayer;
             UpdateCookieText();
             UpdateClickerUpgradeText();
 
@@ -76,21 +83,17 @@ public class CookieManager : MonoBehaviour
     {
         if (cookies >= costToUpgrade2)
         {
-            Debug.Log("Upgrade 1 Bought");
+
             cookies -= costToUpgrade2;
-            cookiesPerSecond += 1f; //Tried to make it add 0.1 cookie per second (Not Sure)
-          //  cookies += cookiesPerSecond * time;
+            cookiesPerSecond += 0.02f; //Tried to make it add 0.2 cookie per second
             costToUpgrade2 = costToUpgrade2 * upgradeMultiplayer;
             upgradeMultiplayer -= 0.002f; //Cost of price multiplyer slowly decreases as time goes on
             UpdateCookieText();
             UpdateBackerOneUpgradeText();
             autoClickerUpgradeIsBought = true;
 
-
         }
-
     }
-
     public void AddCookiesPerSecond()
     {
 
@@ -99,10 +102,13 @@ public class CookieManager : MonoBehaviour
 
         UpdateCookieText();
 
-
-
-
-
+        UpdateClickerUpgradeText();
+        UpdateBackerOneUpgradeText();
+        UpdateBackerTwoUpgradeText();
+        UpdateBackerThreeUpgradeText();
+        UpdateMachineOneUpgradeText();
+        UpdateMachineTwoUpgradeText();
+        UpdateCookiesPSText();
     }
 
     private float time;
@@ -110,11 +116,11 @@ public class CookieManager : MonoBehaviour
     {
         time += Time.deltaTime;
 
-        if(time >= 1)
+        if(time >= 0.1f) // updates every 0.1 second for smoother increase in cookie count in later gameplay
         {
             AddCookiesPerSecond();
 
-            time = 0;
+            time = 0f; // resets the time back to 0 for cookies per second(per 0.1 second)
         }
     }
 
@@ -122,14 +128,13 @@ public class CookieManager : MonoBehaviour
     {
         if (cookies >= costToUpgrade3)
         {
-
             cookies -= costToUpgrade3;
-            cookiesPerSecond += 1f; //Tried to make it add 0.1 cookie per second (Not Sure)
+            cookiesPerSecond += 0.1f; //Tried to make it add 1 cookie per second
             costToUpgrade3 = costToUpgrade3 * upgradeMultiplayer;
             upgradeMultiplayer -= 0.002f; //Cost of price multiplyer slowly decreases as time goes on
             UpdateCookieText();
             UpdateBackerTwoUpgradeText();
-
+            autoClickerUpgradeIsBought = true;
         }
     }
 
@@ -137,14 +142,39 @@ public class CookieManager : MonoBehaviour
     {
         if (cookies >= costToUpgrade4)
         {
-
-            cookies -= costToUpgrade4; 
-            cookiesPerSecond += 5f; //Tried to make it add 0.1 cookie per second (Not Sure)
+            cookies -= costToUpgrade4;
+            cookiesPerSecond += 0.5f; //Tried to make it add 5 cookie per second                          
             costToUpgrade4 = costToUpgrade4 * upgradeMultiplayer;
             upgradeMultiplayer -= 0.002f; //Cost of price multiplyer slowly decreases as time goes on
             UpdateCookieText();
             UpdateBackerThreeUpgradeText();
-
+            autoClickerUpgradeIsBought = true;
+        }
+    }
+    public void UpdateMachineOneUpgrade()
+    {
+        if (cookies >= costToUpgrade5)
+        {
+            cookies -= costToUpgrade5;
+            cookiesPerSecond += 3f; //Tried to make it add 30 cookie per second
+            costToUpgrade5 = costToUpgrade5 * upgradeMultiplayer;
+            upgradeMultiplayer -= 0.002f; //Cost of price multiplyer slowly decreases as time goes on
+            UpdateCookieText();
+            UpdateMachineOneUpgradeText();
+            autoClickerUpgradeIsBought = true;
+        }
+    }
+    public void UpdateMachineTwoUpgrade()
+    {
+        if (cookies >= costToUpgrade6)
+        {
+            cookies -= costToUpgrade6;
+            cookiesPerSecond += 25f; //Tried to make it add 250 cookie per second
+            costToUpgrade6 = costToUpgrade6 * upgradeMultiplayer;
+            upgradeMultiplayer -= 0.002f; //Cost of price multiplyer slowly decreases as time goes on
+            UpdateCookieText();
+            UpdateMachineTwoUpgradeText();
+            autoClickerUpgradeIsBought = true;
         }
     }
 
@@ -176,7 +206,7 @@ public class CookieManager : MonoBehaviour
         else
         {
             upgradeButton1.GetComponent<UnityEngine.UI.Image>().color = Color.red; // if has not enough cookies button turns red
-            upgradeButton1.interactable = true; // // if has not enough cookies you can't click the button 
+            upgradeButton1.interactable = false; // // if has not enough cookies you can't click the button 
         }
     }
 
@@ -212,6 +242,41 @@ public class CookieManager : MonoBehaviour
         }
     }
 
+    public void UpdateMachineOneUpgradeText()
+    {
+        MachineOneUpgradeText.text = " Small Factory    Cost: " + (int)costToUpgrade5;
+
+        if (cookies >= costToUpgrade5)
+        {
+            upgradeButton4.GetComponent<UnityEngine.UI.Image>().color = Color.white; // if has enough cookies button turns white
+            upgradeButton4.interactable = true; // if has enough cookies you can click the button
+        }
+        else
+        {
+            upgradeButton4.GetComponent<UnityEngine.UI.Image>().color = Color.red; // if has not enough cookies button turns red
+            upgradeButton4.interactable = false; // if has not enough cookies you can't click the button 
+        }
+    }
+
+    public void UpdateMachineTwoUpgradeText()
+    {
+        MachineTwoUpgradeText.text = " Large Factory    Cost: " + (int)costToUpgrade6;
+
+        if (cookies >= costToUpgrade6)
+        {
+            upgradeButton5.GetComponent<UnityEngine.UI.Image>().color = Color.white; // if has enough cookies button turns white
+            upgradeButton5.interactable = true; // if has enough cookies you can click the button
+        }
+        else
+        {
+            upgradeButton5.GetComponent<UnityEngine.UI.Image>().color = Color.red; // if has not enough cookies button turns red
+            upgradeButton5.interactable = false; // if has not enough cookies you can't click the button 
+        }
+    }
+    public void UpdateCookiesPSText()
+    {
+        CookiesPSText.text = "Cookies Per Second : " + cookiesPerSecond * 10;
+    }
     private void UpdateCookieText()
     {
         if (cookieText != null)
@@ -230,34 +295,10 @@ public class CookieManager : MonoBehaviour
                     cookieText.text = cookies.ToString("f0") + " Cookies ";
                     break;
             }
-
         }
         else
         {
             Debug.LogWarning("Cookie Text not set");
         }
-
-
-    }//Some random code I dont understand below!
-
-    //IEnumerator AutomaticCookies()
-    //{
-
-
-    //    while (AutoClickisUnlocked == true)
-    //    {
-    //        Debug.Log("Test Tell me whats wrong");
-    //        yield return new WaitForSeconds(10);
-    //        cookies += cookiesPerSecond;
-
-    //    }
-
-    //}
-
-    //void AutomaticCookiesText()
-    //{
-
-
-    //}
-
+    }
 }
